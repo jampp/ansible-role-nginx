@@ -7,8 +7,12 @@ galaxy_info:
   platforms:
   - name: Ubuntu
     versions:
-    - trusty
+      - trusty
+  - name: Centos
+    versions:
+      - 6
+  - name: Amazon Linux
   categories:
   - web
 
-dependencies: {}
+dependencies: []
