@@ -22,6 +22,27 @@ nginx_config_dir: "{{nginx_prefix}}/conf.d"
 nginx_ssl_dir:    "{{nginx_prefix}}/ssl"
 nginx_log_dir:    "/var/log/nginx"
 
+# Cache dirs to be created
+#  Hash that holds the path to caching directories, that can be used in caching
+#  directives (*_cache_path)
+#
+# nginx_cache_dirs:
+#   fastcgi:
+#     prefix: /some/dir/cache/fastcgi # (required)
+#     mode:   0750                    # (optional - defaults to 0750)
+#   images:
+#     prefix: /some/dir/cache/images
+#     mode:   0755
+#
+# And on the nginx_config setting, you can specify something like this:
+#
+# nginx_config:
+#   caching: |
+#     fastcgi_cache_path {{nginx_cache_dirs.fastcgi}} levels=1:2 keys_zone=app:100m inactive=60m;
+#     proxy_cache_path   {{nginx_cache_dirs.images}}  levels=1:2 keys_zone=images:100m inactive=60m;
+#
+nginx_cache_dirs: {}
+
 nginx_workers: 4
 
 # Nginx server configs
