@@ -8,10 +8,9 @@ galaxy_info:
   - name: Ubuntu
     versions:
       - trusty
-  - name: Centos
+  - name: EL
     versions:
       - 6
-  - name: Amazon Linux
   categories:
   - web
 
