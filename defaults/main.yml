@@ -22,6 +22,13 @@ nginx_config_dir: "{{nginx_prefix}}/conf.d"
 nginx_ssl_dir:    "{{nginx_prefix}}/ssl"
 nginx_log_dir:    "/var/log/nginx"
 
+# Symlink to log dir
+#  Sometimes logs are required to be put on a different FS, in which case
+#  you should define nginx_log_symlink_src to the location where the logs
+#  should be placed (i.e. /mnt/log/nginx). A symlink will be then created
+#  to point to this directory, from nginx_log_dir.
+nginx_log_symlink_src: False
+
 # Cache dirs to be created
 #  Hash that holds the path to caching directories, that can be used in caching
 #  directives (*_cache_path)

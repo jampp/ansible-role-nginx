@@ -4,14 +4,18 @@
 
   vars:
     - nginx_no_log: false
+    - nginx_log_symlink_src: /mnt/log/nginx
+    - nginx_vhosts_disable:
+        - default
     - nginx_vhosts:
         - server_name: foo.com
+          default_server: true
           logrotate_enabled: true
           server_aliases:
             - www.foo.bar
             - baz.foo.bar
           root: /var/www/foo.com/html
-          log_fmt: main
+          log_fmt: test
         
         - server_name: sslfoo.com
           server_aliases:
@@ -107,7 +111,7 @@
 
     - nginx_config:
         log_format: |
-          log_format main '$remote_addr - $remote_user [$time_local] '
+          log_format test '$remote_addr - $remote_user [$time_local] '
             '"$request" $status $body_bytes_sent '
             '"$http_referer" "$http_user_agent" '
             '"$http_x_forwarded_for" $request_time';

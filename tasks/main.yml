@@ -13,6 +13,9 @@
 - include: ssl.yml
   tags: nginx_ssl
 
+- include: logs.yml
+  tags: nginx_logs
+
 - include: vhosts.yml
   tags: nginx_vhosts
 
