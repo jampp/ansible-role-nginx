@@ -50,6 +50,7 @@ nginx_log_symlink_src: False
 #
 nginx_cache_dirs: {}
 
+# Nginx workers
 nginx_workers: 4
 
 # Nginx server configs

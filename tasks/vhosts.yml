@@ -24,11 +24,11 @@
 
 - name: Virtualhosts Config
   template: 
-    src=etc/nginx/sites-available/vhost.j2
-    dest="{{nginx_sites_available}}/{{item.server_name}}.conf"
-    owner="root"
-    group="root"
-    mode="644"
+    src:   etc/nginx/sites-available/vhost.j2
+    dest:  "{{nginx_sites_available}}/{{item.server_name}}.conf"
+    owner: "root"
+    group: "root"
+    mode:  "644"
   with_items: nginx_vhosts
   notify: nginx restart
   no_log: true
