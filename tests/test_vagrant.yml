@@ -5,7 +5,7 @@
   vars:
     - nginx_no_log: false
     - nginx_log_symlink_src: /mnt/log/nginx
-    - nginx_vhosts_disable:
+    - nginx_disable_vhosts:
         - default
     - nginx_vhosts:
         - server_name: foo.com

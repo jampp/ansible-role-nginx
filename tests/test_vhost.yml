@@ -4,6 +4,8 @@
 
   vars:
     - nginx_no_log: false
+    - nginx_disable_vhosts:
+      - default
     - nginx_vhosts:
         - server_name: foo.com
           server_aliases:
