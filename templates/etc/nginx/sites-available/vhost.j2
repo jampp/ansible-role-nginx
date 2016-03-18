@@ -14,8 +14,8 @@ server {
   root {{item.root}};
 {% endif %}
 
-  access_log {{ nginx_log_dir}}/{{item.server_name}}/access.log {{item.log_fmt|default('')}};
-  error_log  {{nginx_log_dir}}/{{item.server_name}}/error.log;
+  access_log {{item.access_log | default('%s/%s/access.log' % (nginx_log_dir, item.server_name))}} {{item.log_fmt|default('')}};
+  error_log  {{item.error_log  | default('%s/%s/error_log' % (nginx_log_dir,item.server_name))}};
 
 {% if item.http_directives is defined %}
 {%   for d in item.http_directives %}
@@ -38,8 +38,8 @@ server {
   root {{item.root}};
 {% endif %}
 
-  access_log {{nginx_log_dir}}/{{item.server_name}}/ssl-access.log {{item.log_fmt|default('')}};
-  error_log  {{nginx_log_dir}}/{{item.server_name}}/ssl-error.log;
+  access_log {{item.access_log | default('%s/%s/access.log' % (nginx_log_dir, item.server_name))}} {{item.log_fmt|default('')}};
+  error_log  {{item.error_log  | default('%s/%s/error_log' % (nginx_log_dir,item.server_name))}};
 
 {% if item.https_directives is defined %}
 {%   for d in item.https_directives %}
