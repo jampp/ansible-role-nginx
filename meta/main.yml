@@ -6,16 +6,16 @@ galaxy_info:
   min_ansible_version: 1.8
   platforms:
   - name: Debian
-    - Wheezy
-    - Jessie
+      - Wheezy
+      - Jessie
   - name: Ubuntu
     versions:
-    - trusty
+      - trusty
   - name: EL
     versions:
-    - 6
-    - 7
+      - 6
+      - 7
   categories:
-  - web
+    - web
 
 dependencies: []
