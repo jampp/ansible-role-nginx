@@ -5,12 +5,16 @@ galaxy_info:
   license: Apache
   min_ansible_version: 1.8
   platforms:
+  - name: Debian
+    - Wheezy
+    - Jessie
   - name: Ubuntu
     versions:
-      - trusty
+    - trusty
   - name: EL
     versions:
-      - 6
+    - 6
+    - 7
   categories:
   - web
 
