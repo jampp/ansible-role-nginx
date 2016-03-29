@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     
     ubuntu.vm.provision 'shell', inline: 'apt-get update'
     ubuntu.vm.provision 'shell', inline: 'apt-get install -y -qq  python-pip'
-    ubuntu.vm.provision 'shell', inline: 'pip install ansible jinja2'
+    ubuntu.vm.provision 'shell', inline: 'pip install ansible==2.0.1.0 jinja2'
 
     ubuntu.vm.provision 'ansible' do |ansible| 
       ansible.playbook = 'tests/test_vagrant.yml'
@@ -40,7 +40,7 @@ gpgcheck = 0
     centos6.vm.provision 'shell', inline: "echo \"#{EPEL_REPO}\" > /etc/yum.repos.d/epel.repo"
     centos6.vm.provision 'shell', inline: 'yum install -y python-pip python-devel gcc'
     centos6.vm.provision 'shell', inline: 'pip install -q pip --upgrade'
-    centos6.vm.provision 'shell', inline: 'pip install -q ansible jinja2'
+    centos6.vm.provision 'shell', inline: 'pip install ansible==2.0.1.0 jinja2'
 
     centos6.vm.provision 'ansible' do |ansible| 
       ansible.playbook   = 'tests/test_vagrant.yml'
@@ -65,7 +65,7 @@ gpgcheck = 0
     centos7.vm.provision 'shell', inline: "echo \"#{EPEL_REPO}\" > /etc/yum.repos.d/epel.repo"
     centos7.vm.provision 'shell', inline: 'yum install -y python-pip python-devel gcc'
     centos7.vm.provision 'shell', inline: 'pip install -q pip --upgrade'
-    centos7.vm.provision 'shell', inline: 'pip install -q ansible jinja2'
+    centos7.vm.provision 'shell', inline: 'pip install ansible==2.0.1.0 jinja2'
     centos7.vm.provision 'shell', inline: 'setenforce 0'
 
     centos7.vm.provision 'ansible' do |ansible| 
