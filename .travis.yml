@@ -9,7 +9,7 @@ before_install:
   - sudo apt-get update -qq
 
 install:
-  - pip install ansible
+  - pip install ansible==2.0.1.0
 
 script:
   # Test functionality with default values

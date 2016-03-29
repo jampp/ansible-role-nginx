@@ -11,7 +11,7 @@
     group"{{nginx_group}}"
     mode="640"
   when: item.ssl_enabled is defined and item.ssl_enabled
-  with_items: nginx_vhosts
+  with_items: "{{nginx_vhosts}}"
   notify: nginx restart
   no_log: true
 
@@ -22,8 +22,8 @@
     owner="root"
     group="{{nginx_group}}"
     mode="0640"
-  when: item.ssl_enabled is defined and item.ssl_enabled
-  with_items: nginx_vhosts
+  when: (item.ssl_enabled is defined) and (item.ssl_enabled)
+  with_items: "{{nginx_vhosts}}"
   notify: nginx restart
   no_log: true
 
