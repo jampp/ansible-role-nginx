@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased: 0.5.0
+## 2016-03-31: 0.5.0
 
   - Porting functionality to comply with Ansible 2.x changes
     complex vars
