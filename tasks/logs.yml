@@ -10,7 +10,7 @@
 - name: Nginx Log directory save contents
   command: >
     mv {{nginx_log_dir}} {{nginx_log_dir}}.bkp
-  sudo: true
+  become: true
   when: (_nginx_log_dir.stat.isdir) and (nginx_log_symlink_src != False)
 
 # If nginx_log_symlink_src is other than False, create the directory

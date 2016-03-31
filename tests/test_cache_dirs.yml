@@ -1,7 +1,7 @@
 ---
 
 - hosts: all
-  sudo: yes
+  become: yes
 
   vars:
     - nginx_cache_dirs:

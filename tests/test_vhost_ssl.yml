@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  sudo: yes
+  become: yes
 
   vars:
     - nginx_no_log: True
