@@ -10,12 +10,13 @@
   with_dict: "{{nginx_config}}"
   no_log: true
   
+
 - name: Nginx Workers
   lineinfile:
-    state:    present
-    dest:     "{{nginx_prefix}}/nginx.conf"
-    regexp:   "^([\t\s ]*worker_processes[\t\s ]*)[0-9]*;"
-    line:     "worker_processes {{nginx_workers}};"
+    state: present
+    dest: "{{nginx_prefix}}/nginx.conf"
+    regexp: "^([\\t\\s ]*worker_processes[\\t\\s ]*)[0-9]*;"
+    line: "worker_processes {{nginx_workers}};"
     backrefs: yes
   notify: nginx restart
 
