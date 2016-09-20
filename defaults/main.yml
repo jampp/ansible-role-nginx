@@ -139,8 +139,7 @@ nginx_config: {}
 # A useful scenario for having two different vars is when you want
 # to redirect everything to HTTPS:
 #
-#    http_directives:
-#      - |
+#    http_directives: |
 #        return 301 https://$host$request_uri;
 #     
 #    https_directives: []

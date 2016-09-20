@@ -17,11 +17,7 @@ server {
   access_log {{item.access_log | default('%s/%s/access_log' % (nginx_log_dir, item.server_name))}} {{item.log_fmt|default('')}};
   error_log  {{item.error_log  | default('%s/%s/error_log' % (nginx_log_dir,item.server_name))}};
 
-{% if item.http_directives is defined %}
-{%   for d in item.http_directives %}
-  {{d|indent(width = 2)}}
-{%   endfor %}
-{% endif %}
+  {{item.http_directives|default('')|indent(width = 2)}}
 }
 
 {% if item.ssl_enabled is defined and item.ssl_enabled %}
@@ -41,11 +37,7 @@ server {
   access_log {{item.access_log | default('%s/%s/access_log' % (nginx_log_dir, item.server_name))}} {{item.log_fmt|default('')}};
   error_log  {{item.error_log  | default('%s/%s/error_log' % (nginx_log_dir,item.server_name))}};
 
-{% if item.https_directives is defined %}
-{%   for d in item.https_directives %}
-  {{d|indent(width = 2)}}
-{%   endfor %}
-{% endif %}
+  {{item.https_directives|default('')|indent(width = 2)}}
 
 }
 {% endif %}
