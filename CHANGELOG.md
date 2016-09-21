@@ -1,5 +1,12 @@
 # Changelog
 
+## 2016-09-21: 1.0.0
+
+  - Template main config file
+  - Fixed indentation for http_directives & https_directives
+  - default access_log name typo fixed
+  - Improved some tests
+
 ## 2016-03-31: 0.5.0
 
   - Porting functionality to comply with Ansible 2.x changes
