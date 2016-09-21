@@ -3,6 +3,9 @@
   become: yes
 
   vars:
+    - nginx_context_main: |
+        worker_rlimit_nofile 4096;
+        worker_processes 1;
     - nginx_no_log: false
     - nginx_disable_vhosts:
       - default
@@ -12,10 +15,8 @@
             - www.foo.bar
             - baz.foo.bar
           root: /var/www/foo.com/html
-          http_directives:
-            - |
+          http_directives: |
               access_log off;
-            - |
               return 301 https://$host$request_uri;
         
   roles:

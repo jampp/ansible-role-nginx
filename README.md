@@ -16,13 +16,30 @@ This Ansible role installs Nginx from the distribution's package repository
 Here are some default vars which might be of interest to kickstart your
 configuration. If you want a complete idea, take a look at `defaults/main.yml`.
 ```
-nginx_workers: 4
 nginx_config_dir: "{{nginx_prefix}}/conf.d"
 nginx_ssl_dir:    "{{nginx_prefix}}/ssl"
 nginx_log_dir:    "/var/log/nginx"
 nginx_config:  {}
 nginx_vhosts:  []
 nginx_disable_vhosts: []
+```
+
+The following vars take care of the main nginx configuration file:
+
+ * nginx_context_main
+ * nginx_context_events
+ * nginx_context_http
+
+By default they are unset, and the `*_default` ones set some sane defaults.
+An example of the defaults for those variables is:
+
+```
+nginx_context_main_default: |
+  worker_rlimit_nofile 4096;
+  worker_processes auto;
+
+nginx_context_events_default: |
+  worker_connections 768;
 ```
 
 ## Usage

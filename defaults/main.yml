@@ -29,6 +29,45 @@ nginx_log_dir:    "/var/log/nginx"
 #  to point to this directory, from nginx_log_dir.
 nginx_log_symlink_src: False
 
+# Default config
+nginx_pid_file: /var/run/nginx.pid;
+
+nginx_context_main_default: |
+  worker_rlimit_nofile 4096;
+  worker_processes auto;
+
+nginx_context_events_default: |
+  worker_connections 768;
+
+nginx_context_http_default: |
+  sendfile    on;
+  tcp_nopush  on;
+  tcp_nodelay on;
+  
+  include {{nginx_prefix}}/mime.types;
+  default_type application/octet-stream;
+
+  keepalive_timeout   65;
+  types_hash_max_size 2048;
+
+  gzip on;
+  gzip_disable "msie6";
+
+  #gzip_vary on;
+  #gzip_proxied any;
+  #gzip_comp_level 6;
+  #gzip_buffers 16 8k;
+  #gzip_http_version 1.1;
+  #gzip_types text/plain 
+  #   text/css 
+  #   application/json 
+  #   application/x-javascript 
+  #   text/xml 
+  #   application/xml 
+  #   application/xml+rss 
+  #   text/javascript;
+
+
 # Cache dirs to be created
 #  Hash that holds the path to caching directories, that can be used in caching
 #  directives (*_cache_path)
@@ -100,8 +139,7 @@ nginx_config: {}
 # A useful scenario for having two different vars is when you want
 # to redirect everything to HTTPS:
 #
-#    http_directives:
-#      - |
+#    http_directives: |
 #        return 301 https://$host$request_uri;
 #     
 #    https_directives: []

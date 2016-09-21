@@ -1,17 +1,9 @@
 ---
 
-- name: Include sites-enabled
-  lineinfile:
-    state=present
-    dest="{{nginx_prefix}}/nginx.conf"
-    insertafter="include /etc/nginx/conf.d/\*\.conf;$"
-    line="    include {{nginx_sites_enabled}}/*.conf;"
-  notify: nginx restart
-
-- name: Stat default.conf
-  stat: 
+- name: Stat default vhost
+  stat:
     path: "{{nginx_config_dir}}/default.conf"
-  register: _nginx_default_conf
+  register: default_vh
 
 - name: Remove default_server config
   lineinfile:
@@ -19,6 +11,7 @@
     regexp:   '^([\t ]*listen.*)default_server;'
     backrefs: yes
     line:     '\1;'
-  when: _nginx_default_conf.stat.exists
+  when: default_vh.stat.exists
+  notify: nginx restart
 
 # vi:ts=2:sw=2:et:ft=yaml

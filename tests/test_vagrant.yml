@@ -3,6 +3,9 @@
   become: yes
 
   vars:
+    - nginx_context_main: |
+        worker_rlimit_nofile 4096;
+        worker_processes 1;
     - nginx_no_log: false
     - nginx_log_symlink_src: /mnt/log/nginx
     - nginx_disable_vhosts:
@@ -101,10 +104,11 @@
               8g5WFN/5+YJzDt5bypUycUH1Evyv93m1J9FePuP2kqVRx3XhvI4lXUZKaUI34qql
               x1AtpNEaHJFj
               -----END CERTIFICATE-----
-          http_directives:
-            - |
+          http_directives: |
               return 301 https://www.sslfoo.com;
 
+          https_directives: |
+              access_log off;
 
     - nginx_cache_dirs:
         a_cache:

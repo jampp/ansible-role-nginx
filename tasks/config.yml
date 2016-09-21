@@ -1,5 +1,15 @@
 ---
 
+- name: Nginx main configuration file
+  template:
+    src:   etc/nginx/nginx.conf.j2
+    dest:  "{{nginx_prefix}}/nginx.conf"
+    owner: "root"
+    group: "{{nginx_group}}"
+    mode:  "0644"
+  notify: nginx restart
+ 
+
 - name: Nginx configuration includes
   template:
     src:   etc/nginx/conf.d/conf.j2
@@ -8,26 +18,8 @@
     group: "{{nginx_group}}"
     mode:  "0644"
   with_dict: "{{nginx_config}}"
-  no_log: true
+  notify: nginx restart
   
-
-- name: Nginx Workers
-  lineinfile:
-    state: present
-    dest: "{{nginx_prefix}}/nginx.conf"
-    regexp: "^([\\t\\s ]*worker_processes[\\t\\s ]*)[0-9]*;"
-    line: "worker_processes {{nginx_workers}};"
-    backrefs: yes
-  notify: nginx restart
-
-
-- name: Nginx disable default virtualhost
-  lineinfile:
-    state:  absent
-    dest:   "{{nginx_prefix}}/nginx.conf"
-    regexp: "listen .* default_server;"
-  notify: nginx restart
-
 
 - name: Nginx OS family config (Debian)
   include: config/Debian.yml

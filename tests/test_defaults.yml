@@ -2,6 +2,11 @@
 - hosts: localhost
   remote_user: root
 
+  vars:
+    - nginx_context_main: |
+        worker_rlimit_nofile 4096;
+        worker_processes 1;
+ 
   roles:
     - ansible-role-nginx
 

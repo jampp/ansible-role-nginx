@@ -3,6 +3,9 @@
   become: yes
 
   vars:
+    - nginx_context_main: |
+        worker_rlimit_nofile 4096;
+        worker_processes 1;
     - nginx_no_log: false
     - nginx_vhosts:
         - server_name: foo.com

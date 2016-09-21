@@ -4,6 +4,11 @@
   become: yes
 
   vars:
+
+    - nginx_context_main: |
+        worker_rlimit_nofile 4096;
+        worker_processes 1;
+
     - nginx_cache_dirs:
         a_cache:
           prefix: /opt/cache/nginx/cache
@@ -22,7 +27,7 @@
           fastcgi_cache_path
             {{nginx_cache_dirs.a_fastcgi_cache.prefix}} 
             levels=1:2 
-            keys_zone=a_cache:100m 
+            keys_zone=a_fastcgi_cache:100m 
             inactive=60m;
 
 
