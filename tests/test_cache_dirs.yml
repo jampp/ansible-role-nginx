@@ -11,6 +11,10 @@
         a_fastcgi_cache:
           prefix: /opt/cache/nginx/fastcgi
 
+    - nginx_context_main: |
+        worker_rlimit_nofile 4096;
+        worker_processes 1;
+ 
     - nginx_config:
         caching: |
           proxy_cache_path
