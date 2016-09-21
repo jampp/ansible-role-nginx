@@ -12,10 +12,8 @@
             - www.foo.bar
             - baz.foo.bar
           root: /var/www/foo.com/html
-          http_directives:
-            - |
+          http_directives: |
               access_log off;
-            - |
               return 301 https://$host$request_uri;
         
   roles:

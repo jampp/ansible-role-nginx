@@ -105,6 +105,7 @@
               return 301 https://www.sslfoo.com;
 
           https_directives: |
+              access_log off;
 
     - nginx_cache_dirs:
         a_cache:
