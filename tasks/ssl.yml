@@ -9,7 +9,7 @@
     content: "{{item.certs.key}}"
     owner:   "root"
     group:   "{{nginx_group}}"
-    mode:    "640"
+    mode:    "0640"
   when: (item.ssl_enabled is defined) and (item.ssl_enabled)
   with_items: "{{nginx_vhosts}}"
   notify: nginx restart

@@ -30,7 +30,7 @@
     dest:  "{{nginx_sites_available}}/{{item.server_name}}.conf"
     owner: "root"
     group: "root"
-    mode:  "644"
+    mode:  "0644"
   with_items: "{{nginx_vhosts}}"
   notify: nginx restart
   no_log: true
