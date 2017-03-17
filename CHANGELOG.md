@@ -1,5 +1,10 @@
 # Changelog
 
+## 2017-03-17: 1.0.1
+
+  - Ansible lint - fixed whitespaces
+  - Ansible lint - fixed octal permissions
+
 ## 2016-09-21: 1.0.0
 
   - Template main config file
