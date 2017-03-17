@@ -10,7 +10,7 @@
   with_items:
     - "{{nginx_sites_available}}"
     - "{{nginx_sites_enabled}}"
- 
+
 
 - name: Nginx conf.d directory
   file:
@@ -44,7 +44,7 @@
   stat:
     path: "{{nginx_log_dir}}"
   register: _nginx_log_dir
-  
+
 # If nginx_log_dir exists and has some content, the file module will refuse
 # to force the symlink. This way, contents will be kept.
 #

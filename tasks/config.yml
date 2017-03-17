@@ -8,7 +8,7 @@
     group: "{{nginx_group}}"
     mode:  "0644"
   notify: nginx restart
- 
+
 
 - name: Nginx configuration includes
   template:
@@ -19,7 +19,7 @@
     mode:  "0644"
   with_dict: "{{nginx_config}}"
   notify: nginx restart
-  
+
 
 - name: Nginx OS family config (Debian)
   include: config/Debian.yml
