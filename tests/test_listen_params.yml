@@ -12,7 +12,7 @@
     - nginx_vhosts:
         - server_name: foo.com
           listen_parameters:
-            - spdy
+            - deferred
             - backlog=512
           server_aliases:
             - www.foo.bar
