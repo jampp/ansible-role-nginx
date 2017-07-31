@@ -13,6 +13,9 @@
     - nginx_vhosts:
         - server_name: foo.com
           default_server: true
+          listen_parameters:
+            - spdy
+            - backlog=512
           access_log: "{{nginx_log_dir}}/othervhosts.log"
           logrotate_enabled: true
           server_aliases:
