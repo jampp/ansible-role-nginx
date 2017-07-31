@@ -111,10 +111,8 @@ nginx_config: {}
 #    root: /var/www/foo.bar/html
 #    # Add extra parameters to listen directive
 #    listen_parameters:
-#     - name: backlog
-#       value: 1024
-#     - name: so_keepalive
-#       value: "on"
+#     - backlog=1024
+#     - spdy
 #    # If you have defined a log format on the nginx_config settings
 #    # you can reference it in a virtualhost defining log_fmt
 #    log_fmt: format_name
