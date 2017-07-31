@@ -2,7 +2,13 @@
 
 server {
 
-  listen {{item.listen|default('80')}} {% if item.default_server is defined and item.default_server %}default_server{% endif %};
+  listen {{item.listen|default('80')}} {% if item.default_server is defined and item.default_server %}default_server{% endif %}
+  {%- if item.listen_parameters is defined %}
+    {%- for param in item.listen_parameters %}
+      {{param.name}}={{param.value}}
+    {%- endfor %}
+  {%- endif %};
+
   server_name {{item.server_name}}
 {% if item.server_aliases is defined %}
 {%   for a in item.server_aliases %}
@@ -23,13 +29,19 @@ server {
 {% if item.ssl_enabled is defined and item.ssl_enabled %}
 server {
 
-  listen {{item.listen_ssl|default('443')}} {% if item.default_server is defined and item.default_server %}default_server{% endif %};
+  listen {{item.listen_ssl|default('443')}} {% if item.default_server is defined and item.default_server %}default_server{% endif %}
+  {%- if item.listen_parameters is defined %}
+    {%- for param in item.listen_parameters %}
+      {{param.name}}={{param.value}}
+    {%- endfor %}
+  {%- endif %};
+
   server_name {{item.server_name}};
 
   ssl on;
   ssl_certificate         {{nginx_ssl_dir}}/{{item.server_name}}.pem;
   ssl_certificate_key     {{nginx_ssl_dir}}/{{item.server_name}}.key;
-  
+
 {% if item.root is defined %}
   root {{item.root}};
 {% endif %}

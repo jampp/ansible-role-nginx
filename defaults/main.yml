@@ -43,7 +43,7 @@ nginx_context_http_default: |
   sendfile    on;
   tcp_nopush  on;
   tcp_nodelay on;
-  
+
   include {{nginx_prefix}}/mime.types;
   default_type application/octet-stream;
 
@@ -58,13 +58,13 @@ nginx_context_http_default: |
   #gzip_comp_level 6;
   #gzip_buffers 16 8k;
   #gzip_http_version 1.1;
-  #gzip_types text/plain 
-  #   text/css 
-  #   application/json 
-  #   application/x-javascript 
-  #   text/xml 
-  #   application/xml 
-  #   application/xml+rss 
+  #gzip_types text/plain
+  #   text/css
+  #   application/json
+  #   application/x-javascript
+  #   text/xml
+  #   application/xml
+  #   application/xml+rss
   #   text/javascript;
 
 
@@ -101,7 +101,7 @@ nginx_workers: 4
 #       '"$http_x_forwarded_for" $request_time';
 #
 nginx_config: {}
-  
+
 
 # Nginx Vhosts example
 #
@@ -109,6 +109,12 @@ nginx_config: {}
 #  # Each item on the list, represents a virtualhost configuration
 #  - server_name: foo.bar
 #    root: /var/www/foo.bar/html
+#    # Add extra parameters to listen directive
+#    listen_parameters:
+#     - name: backlog
+#       value: 1024
+#     - name: so_keepalive
+#       value: "on"
 #    # If you have defined a log format on the nginx_config settings
 #    # you can reference it in a virtualhost defining log_fmt
 #    log_fmt: format_name
@@ -141,7 +147,7 @@ nginx_config: {}
 #
 #    http_directives: |
 #        return 301 https://$host$request_uri;
-#     
+#
 #    https_directives: []
 #
 nginx_vhosts: []
