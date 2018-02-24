@@ -15,6 +15,20 @@ nginx_enabled: true
 # Configuration prefix
 nginx_prefix: /etc/nginx
 
+nginx_build_from_src: false
+nginx_src_package: nginx-1.12.2
+nginx_src_url: "http://nginx.org/download/{{nginx_src_package}}.tar.gz"
+nginx_src_dest: "/usr/local/src/"
+nginx_src_config_params: >
+  {% for module in nginx_src_extra_modules %}
+    --add-module={{module.path}}
+  {% endfor %}
+
+
+nginx_src_extra_modules: []
+# - url: https://github.com/weibocom/nginx-upsync-module.git
+#   path: /usr/local/src/example
+
 nginx_sites_available: "{{nginx_prefix}}/sites-available"
 nginx_sites_enabled:   "{{nginx_prefix}}/sites-enabled"
 

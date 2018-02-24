@@ -1,0 +1,33 @@
+---
+#
+# Compile from source
+#
+
+- name: Download and uncompress nginx source
+  unarchive:
+    src: "{{nginx_src_url}}"
+    dest: "{{nginx_src_dest}}"
+    remote_src: yes
+
+- name: Download extra mods
+  git:
+    repo: "{{item.url}}"
+    dest: "{{item.path}}"
+    accept_hostkey: yes
+  with_items: "{{nginx_src_extra_modules}}"
+
+- name: Nginx run code configure
+  command: ./configure {{nginx_src_config_params}}
+  args:
+    chdir: "{{nginx_src_dest}}/{{nginx_src_package}}"
+
+- name: Nginx make
+  make:
+    chdir: "{{nginx_src_dest}}/{{nginx_src_package}}"
+
+- name: Nginx make install
+  make:
+    chdir: "{{nginx_src_dest}}/{{nginx_src_package}}"
+    target: install
+
+# vi:ts=2:sw=2:et:ft=yaml

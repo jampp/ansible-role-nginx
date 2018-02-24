@@ -6,6 +6,11 @@
 
 - include: install.yml
   tags: nginx_install
+  when: not nginx_build_from_src
+
+- include: compile.yml
+  tags: nginx_compile
+  when: nginx_build_from_src
 
 - include: dirs.yml
   tags: nginx_dirs
