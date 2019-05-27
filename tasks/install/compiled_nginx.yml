@@ -1,0 +1,61 @@
+---
+#
+# Compile and install nginx using source code
+#
+
+- name: Remove nginx installation by repo
+  package:
+    name: nginx
+    state: absent
+
+- name: Install dependencies for compilation
+  package:
+    name:  "{{nginx_compilation_packages}}"
+    state: "present"
+
+- name: Create system group
+  group:
+    name: "{{nginx_group}}"
+    system: true
+    state: present
+
+- name: Create system user
+  user:
+    name: "{{nginx_user}}"
+    system: true
+    shell: "/sbin/nologin"
+    group: "{{nginx_group}}"
+    createhome: false
+
+- name: Download sources
+  unarchive:
+    src: "{{item}}"
+    dest: /usr/local/src
+    remote_src: yes
+  with_items: "{{nginx_sources}}"
+
+- name: Configure nginx source code
+  command: >
+    ./configure {{nginx_compile_flags}}
+  args:
+    chdir: /usr/local/src/nginx-{{nginx_version}}
+
+- name: Build source code
+  make:
+    chdir: /usr/local/src/nginx-{{nginx_version}}
+
+- name: Install source code
+  make:
+    chdir: /usr/local/src/nginx-{{nginx_version}}
+    target: install
+  become: true
+
+- name: Install init script
+  template:
+    src: etc/init.d/nginx.j2
+    dest: /etc/init.d/nginx
+    owner: root
+    group: root
+    mode: "0755"
+
+# vi:ts=2:sw=2:et:ft=yaml

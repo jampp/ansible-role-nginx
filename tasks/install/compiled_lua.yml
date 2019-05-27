@@ -1,0 +1,25 @@
+---
+#
+# Compile and install Lua libraries
+#
+
+- name: Configure lua rocks source code
+  command: >
+    ./configure
+  args:
+    chdir: /usr/local/src/luarocks-{{nginx_lua_rocks_version}}
+
+- name: Build lua rocks source code
+  make:
+    chdir: /usr/local/src/luarocks-{{nginx_lua_rocks_version}}
+    target: build
+
+- name: Install lua rocks
+  make:
+    chdir: /usr/local/src/luarocks-{{nginx_lua_rocks_version}}
+    target: install
+  become: true
+
+- name: Install additional lua rocks
+  command: "/usr/local/bin/luarocks install {{item.name}} {{item.version}}"
+  loop: "{{nginx_lua_rocks}}"

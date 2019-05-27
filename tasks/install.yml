@@ -1,9 +1,12 @@
 ---
 
-- include: install/Debian.yml
-  when: ansible_os_family == 'Debian'
+- include: install/repository_nginx.yml
+  when: nginx_install_repo
 
-- include: install/RedHat.yml
-  when: ansible_os_family == 'RedHat'
+- include: install/compiled_nginx.yml
+  when: nginx_install_compiled
+
+- include: install/compiled_lua.yml
+  when: nginx_install_compiled
 
 # vi:ts=2:sw=2:et:ft=yaml
