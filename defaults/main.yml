@@ -13,8 +13,8 @@ nginx_no_log: true
 nginx_enabled: true
 
 # Toggles to control wether nginx will be installed by repo or compiled
-nginx_install_repo: false
-nginx_install_compiled: true
+nginx_install_repo: true
+nginx_install_compiled: false
 
 # Configuration prefix
 nginx_prefix: /etc/nginx
