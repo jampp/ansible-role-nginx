@@ -3,11 +3,13 @@
 nginx_user:  www-data
 nginx_group: www-data
 
-nginx_packages: 
+nginx_repo_packages:
   - nginx
   - nginx-full
   - nginx-common
   - openssl
+
+nginx_compilation_packages: []
 
 nginx_pid_file: /run/nginx.pid
 

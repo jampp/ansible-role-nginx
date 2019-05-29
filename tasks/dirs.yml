@@ -51,7 +51,9 @@
 - name: Nginx Log directory save contents
   command: >
     mv {{nginx_log_dir}} {{nginx_log_dir}}.bkp
-  when: (_nginx_log_dir.stat.isdir) and (nginx_log_symlink_src != False)
+  when:
+    - _nginx_log_dir.stat.isdir is defined
+    - nginx_log_symlink_src != False
 
 # If nginx_log_symlink_src is other than False, create the directory
 # (most likely on a different filesystem). If it is set to False, then

@@ -12,6 +12,10 @@ nginx_no_log: true
 # Start Nginx, and enable the service
 nginx_enabled: true
 
+# Toggles to control wether nginx will be installed by repo or compiled
+nginx_install_repo: false
+nginx_install_compiled: true
+
 # Configuration prefix
 nginx_prefix: /etc/nginx
 
@@ -31,6 +35,72 @@ nginx_log_symlink_src: False
 
 # Default config
 nginx_pid_file: /var/run/nginx.pid;
+
+# Variables to control compilation sources
+nginx_version: 1.13.12
+nginx_devel_kit_version: 0.3.0
+nginx_lua_rocks_version: 3.0.4
+nginx_lua_module_version: 0.10.14
+
+nginx_sources:
+  - http://nginx.org/download/nginx-{{nginx_version}}.tar.gz
+  - https://github.com/simplresty/ngx_devel_kit/archive/v{{nginx_devel_kit_version}}.tar.gz
+  - https://github.com/openresty/lua-nginx-module/archive/v{{nginx_lua_module_version}}.tar.gz
+  - https://luarocks.org/releases/luarocks-{{nginx_lua_rocks_version}}.tar.gz
+
+# Packages to install by LuaRocks
+# nginx_lua_rocks:
+#   - name: nginx-lua-prometheus
+#     version: "{{nginx_lua_prometheus_version}}"
+nginx_lua_rocks: []
+
+nginx_bin: /usr/local/sbin/nginx
+
+nginx_compile_flags:
+   --prefix=/usr/local/nginx
+   --sbin-path=/usr/local/sbin/nginx
+   --modules-path=/usr/local/lib64/nginx/modules
+   --conf-path=/etc/nginx/nginx.conf
+   --error-log-path=/var/log/nginx/error.log
+   --http-log-path=/var/log/nginx/access.log
+   --http-client-body-temp-path=/var/lib/nginx/tmp/client_body
+   --http-proxy-temp-path=/var/lib/nginx/tmp/proxy
+   --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi
+   --http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi
+   --http-scgi-temp-path=/var/lib/nginx/tmp/scgi
+   --pid-path=/var/run/nginx.pid
+   --lock-path=/var/lock/subsys/nginx
+   --user=nginx
+   --group=nginx
+   --with-file-aio
+   --with-ipv6
+   --with-http_ssl_module
+   --with-http_v2_module
+   --with-http_realip_module
+   --with-http_addition_module
+   --with-http_gunzip_module
+   --with-http_gzip_static_module
+   --with-http_random_index_module
+   --with-http_secure_link_module
+   --with-http_degradation_module
+   --with-http_slice_module
+   --with-http_stub_status_module
+   --with-http_auth_request_module
+   --without-mail_pop3_module
+   --without-mail_imap_module
+   --without-mail_smtp_module
+   --with-pcre
+   --with-pcre-jit
+   --with-stream
+   --with-stream_ssl_module
+   --with-debug
+   --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic'
+   --with-ld-opt='-Wl,-E'
+   --add-module=../ngx_devel_kit-{{nginx_devel_kit_version}}
+   --add-module=../lua-nginx-module-{{nginx_lua_module_version}}
+   {{nginx_extra_compile_flags}}
+
+nginx_extra_compile_flags: ""
 
 nginx_context_main_default: |
   worker_rlimit_nofile 4096;

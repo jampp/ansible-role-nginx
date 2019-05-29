@@ -3,10 +3,19 @@
 nginx_user:  nginx
 nginx_group: nginx
 
-nginx_packages: 
+nginx_repo_packages:
   - nginx
+
+nginx_compilation_packages:
+  - gcc
+  - make
+  - git
+  - pkgconfig
+  - openssl-devel
+  - pcre-devel
+  - zlib-devel
+  - luajit-devel
 
 nginx_pid_file: /var/run/nginx.pid
 
 # vi:ts=2:sw=2:et:ft=yaml
-
