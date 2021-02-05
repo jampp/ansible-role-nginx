@@ -41,8 +41,8 @@ nginx_version: 1.13.12
 nginx_devel_kit_version: 0.3.0
 nginx_lua_rocks_version: 3.0.4
 nginx_lua_module_version: 0.10.14
-nginx_luajit_git_version: v2.1
-nginx_luajit_repository: https://github.com/LuaJIT/LuaJIT.git
+nginx_luajit_git_version: v2.1-20201229
+nginx_luajit_repository: https://github.com/openresty/luajit2.git
 nginx_luajit_bin_name: luajit-2.1.0-beta3
 
 nginx_sources:
