@@ -3,6 +3,9 @@
 - include: install/repository_nginx.yml
   when: nginx_install_repo
 
+- include: install/compiled_luajit.yml
+  when: nginx_install_compiled and nginx_compiled_luajit_git
+
 - include: install/compiled_nginx.yml
   when: nginx_install_compiled
 

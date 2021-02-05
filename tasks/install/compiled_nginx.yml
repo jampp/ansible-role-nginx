@@ -35,8 +35,8 @@
   with_items: "{{nginx_sources}}"
 
 - name: Configure nginx source code
-  command: >
-    ./configure {{nginx_compile_flags}}
+  shell: >
+    {{nginx_configure_environ}} ./configure {{nginx_compile_flags}}
   args:
     chdir: /usr/local/src/nginx-{{nginx_version}}
 

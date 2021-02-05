@@ -41,6 +41,9 @@ nginx_version: 1.13.12
 nginx_devel_kit_version: 0.3.0
 nginx_lua_rocks_version: 3.0.4
 nginx_lua_module_version: 0.10.14
+nginx_luajit_git_version: v2.1
+nginx_luajit_repository: https://github.com/LuaJIT/LuaJIT.git
+nginx_luajit_bin_name: luajit-2.1.0-beta3
 
 nginx_sources:
   - http://nginx.org/download/nginx-{{nginx_version}}.tar.gz
@@ -94,7 +97,7 @@ nginx_compile_flags:
    --with-stream
    --with-stream_ssl_module
    --with-debug
-   --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic'
+   --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 {{nginx_arch_flags}}'
    --with-ld-opt='-Wl,-E'
    --add-module=../ngx_devel_kit-{{nginx_devel_kit_version}}
    --add-module=../lua-nginx-module-{{nginx_lua_module_version}}
