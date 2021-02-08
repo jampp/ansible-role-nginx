@@ -13,7 +13,7 @@ nginx_compilation_packages: []
 nginx_compilation_arch_packages: []
 
 nginx_compiled_luajit_git: false
-nginx_configure_environ: ""
+nginx_configure_environ: {}
 nginx_lua_rocks_configure_args: ""
 
 nginx_pid_file: /run/nginx.pid

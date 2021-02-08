@@ -1,7 +1,9 @@
 nginx_compilation_arch_packages:
   - git
 nginx_compiled_luajit_git: true
-nginx_configure_environ: "LUAJIT_LIB=/usr/local/luajit/lib LUAJIT_INC=/usr/local/luajit/include/luajit-2.1"
+nginx_configure_environ:
+  LUAJIT_LIB: /usr/local/luajit/lib
+  LUAJIT_INC: /usr/local/luajit/include/luajit-2.1
 nginx_lua_rocks_configure_args: --with-lua=/usr/local/luajit
 
 nginx_arch_flags: "-mtune=generic"
