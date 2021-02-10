@@ -1,0 +1,44 @@
+---
+#
+# Compile and install nginx using source code
+#
+
+- name: Download LuaJIT sources
+  git:
+    repo: "{{nginx_luajit_repository}}"
+    dest: /usr/local/src/luajit.git
+    version: "{{nginx_luajit_git_version}}"
+    accept_hostkey: yes
+    force: yes
+
+- name: Build LuaJIT
+  make:
+    chdir: /usr/local/src/luajit.git
+
+- name: Install LuaJIT
+  make:
+    chdir: /usr/local/src/luajit.git
+    target: install
+    params:
+      PREFIX: /usr/local/luajit
+  become: true
+
+- name: Configure LuaJIT ld.so.conf
+  copy:
+    dest: /etc/ld.so.conf.d/luajit.conf
+    content: /usr/local/luajit
+    mode: 640
+  become: true
+
+- name: Run ldconfig for LuaJIT
+  command: ldconfig
+  become: true
+
+- name: Create symlink for LuaJIT
+  file:
+    state: link
+    src: "/usr/local/luajit/bin/{{nginx_luajit_bin_name}}"
+    path: /usr/local/luajit/bin/luajit
+  become: true
+
+# vi:ts=2:sw=2:et:ft=yaml

@@ -5,7 +5,7 @@
 
 - name: Configure lua rocks source code
   command: >
-    ./configure
+    ./configure {{nginx_lua_rocks_configure_args}}
   args:
     chdir: /usr/local/src/luarocks-{{nginx_lua_rocks_version}}
 

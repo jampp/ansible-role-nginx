@@ -39,6 +39,7 @@
     ./configure {{nginx_compile_flags}}
   args:
     chdir: /usr/local/src/nginx-{{nginx_version}}
+  environment: "{{ nginx_configure_environ }}"
 
 - name: Build source code
   make:
