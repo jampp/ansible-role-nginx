@@ -26,8 +26,8 @@
 - name: Configure LuaJIT ld.so.conf
   copy:
     dest: /etc/ld.so.conf.d/luajit.conf
-    content: /usr/local/luajit
-    mode: 640
+    content: /usr/local/luajit/lib
+    mode: 0640
   become: true
 
 - name: Run ldconfig for LuaJIT
