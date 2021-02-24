@@ -22,4 +22,4 @@
 
 - name: Install additional lua rocks
   command: "/usr/local/bin/luarocks install {{item.name}} {{item.version}}"
-  loop: "{{nginx_lua_rocks}}"
+  with_items: "{{ nginx_lua_rocks }}"
