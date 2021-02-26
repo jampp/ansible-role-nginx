@@ -13,6 +13,11 @@
     name:  "{{nginx_compilation_packages}}"
     state: "present"
 
+- name: Install extra dependencies for compilation
+  package:
+    name:  "{{nginx_compilation_arch_packages}}"
+    state: "present"
+
 - name: Create system group
   group:
     name: "{{nginx_group}}"
