@@ -19,9 +19,8 @@ nginx_compilation_arch_packages:
   - luajit-devel
 
 nginx_compiled_luajit_git: false
-nginx_configure_environ:
-  LUAJIT_INC: /usr/include
-nginx_lua_rocks_configure_args: ""
+nginx_configure_environ: {}
+nginx_lua_rocks_configure_args: --with-lua-include=/usr/include
 
 nginx_pid_file: /var/run/nginx.pid
 
