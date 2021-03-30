@@ -20,7 +20,7 @@
     mode:  "0755"
   when: (item.create_root is defined) and (item.create_root) and (item.root is defined) and (item.root)
   with_items: "{{nginx_vhosts}}"
-  notify: nginx restart
+  notify: nginx reload
   no_log: true
 
 
@@ -32,7 +32,7 @@
     group: "root"
     mode:  "0644"
   with_items: "{{nginx_vhosts}}"
-  notify: nginx restart
+  notify: nginx reload
   no_log: true
 
 
@@ -42,7 +42,7 @@
     dest:  "{{nginx_sites_enabled}}/{{item.server_name}}.conf"
     state: link
   with_items: "{{nginx_vhosts}}"
-  notify: nginx restart
+  notify: nginx reload
   no_log: true
 
 
@@ -51,7 +51,7 @@
     state: absent
     dest:  "{{nginx_sites_enabled}}/{{item}}"
   with_items: "{{nginx_disable_vhosts}}"
-  notify: nginx restart
+  notify: nginx reload
 
 
 # vi:ts=2:sw=2:et:ft=yaml
