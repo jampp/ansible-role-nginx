@@ -54,6 +54,7 @@
   make:
     chdir: /usr/local/src/nginx-{{nginx_version}}
     target: install
+  notify: nginx restart
   become: true
 
 - name: Install init script
