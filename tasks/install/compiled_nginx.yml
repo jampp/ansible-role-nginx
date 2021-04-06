@@ -51,12 +51,32 @@
   make:
     chdir: /usr/local/src/nginx-{{nginx_version}}
 
+- name: Stat nginx compiled binary
+  stat:
+    checksum_algorithm: sha256
+    get_checksum: true
+    # This path is probably dependent on the nginx version.
+    path: /usr/local/src/nginx-{{ nginx_version }}/objs/nginx
+  register: _nginx_src_compiled_binary_stat
+
+- name: Stat nginx installed binary
+  stat:
+    checksum_algorithm: sha256
+    get_checksum: true
+    path: "{{ nginx_bin }}"
+  register: _nginx_src_installed_binary_stat
+  failed_when: false  # The file doesn't exist when this is first run
+
 - name: Install source code
   make:
     chdir: /usr/local/src/nginx-{{nginx_version}}
     target: install
   notify: nginx restart
   become: true
+  when: >
+    not _nginx_src_installed_binary_stat.stat.exists or
+    (_nginx_src_installed_binary_stat.stat.checksum !=
+      _nginx_src_compiled_binary_stat.stat.checksum)
 
 - name: Install init script
   template:
