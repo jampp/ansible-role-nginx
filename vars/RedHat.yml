@@ -22,6 +22,7 @@ nginx_compilation_arch_packages:
 
 nginx_compiled_luajit_git: false
 nginx_compiled_luajit_packages:
+  - git  # amazon-linux-2 in aarch64 doesn't come with git installed by default
   - gcc
   - make
 
