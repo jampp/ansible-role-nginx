@@ -10,8 +10,9 @@
 
 - name: Install dependencies for compilation
   package:
-    name:  "{{nginx_compilation_packages}}"
+    name: "{{nginx_compilation_packages}}"
     state: "present"
+    update_cache: true
 
 - name: Install extra dependencies for compilation
   package:
@@ -64,5 +65,28 @@
     owner: root
     group: root
     mode: "0755"
+  when: ansible_service_mgr != "systemd"
 
+- name: Install systemd unit file
+  template:
+    src: etc/systemd/system/nginx.service
+    dest: /etc/systemd/system/nginx.service
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_service_mgr == "systemd"
+  register: _nginx_systemd_unit_file
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+  when: _nginx_systemd_unit_file.changed and ansible_service_mgr == "systemd"
+
+- name: Nginx Temp directories
+  file:
+    state: directory
+    dest: /var/lib/nginx/tmp/  # See defaults/main.yml
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_group }}"
+    mode: "0750"
 # vi:ts=2:sw=2:et:ft=yaml

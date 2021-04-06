@@ -11,6 +11,12 @@
     accept_hostkey: yes
     force: yes
 
+- name: Install dependencies for LuaJIT compilation
+  package:
+    name: "{{ nginx_compiled_luajit_packages }}"
+    state: "present"
+    update_cache: true
+
 - name: Build LuaJIT
   make:
     chdir: /usr/local/src/luajit.git

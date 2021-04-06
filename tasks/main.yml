@@ -8,6 +8,9 @@
   include_vars: "{{ansible_architecture}}.yml"
   tags: always
 
+- include: prepare.yml
+  tags: nginx_prepare
+
 - include: install.yml
   tags: nginx_install
 

@@ -1,0 +1,7 @@
+---
+
+- name: Add EPEL repository (RedHat)
+  yum:
+    name: "epel-release"
+    state: "present"
+  when: ansible_os_family == "RedHat"

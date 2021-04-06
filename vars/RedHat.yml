@@ -5,6 +5,7 @@ nginx_group: nginx
 
 nginx_repo_packages:
   - nginx
+  - policycoreutils-python
 
 nginx_compilation_packages:
   - gcc
@@ -14,11 +15,16 @@ nginx_compilation_packages:
   - openssl-devel
   - pcre-devel
   - zlib-devel
+  - unzip
 
 nginx_compilation_arch_packages:
   - luajit-devel
 
 nginx_compiled_luajit_git: false
+nginx_compiled_luajit_packages:
+  - gcc
+  - make
+
 nginx_configure_environ: {}
 nginx_lua_rocks_configure_args: --with-lua-include=/usr/include/luajit-2.0
 
