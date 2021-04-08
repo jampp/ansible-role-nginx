@@ -10,46 +10,46 @@
 
 - name: Install dependencies for compilation
   package:
-    name: "{{nginx_compilation_packages}}"
+    name: "{{ nginx_compilation_packages }}"
     state: "present"
     update_cache: true
 
 - name: Install extra dependencies for compilation
   package:
-    name:  "{{nginx_compilation_arch_packages}}"
+    name:  "{{ nginx_compilation_arch_packages }}"
     state: "present"
 
 - name: Create system group
   group:
-    name: "{{nginx_group}}"
+    name: "{{ nginx_group }}"
     system: true
     state: present
 
 - name: Create system user
   user:
-    name: "{{nginx_user}}"
+    name: "{{ nginx_user }}"
     system: true
     shell: "/sbin/nologin"
-    group: "{{nginx_group}}"
+    group: "{{ nginx_group }}"
     createhome: false
 
 - name: Download sources
   unarchive:
-    src: "{{item}}"
+    src: "{{ item }}"
     dest: /usr/local/src
     remote_src: yes
-  with_items: "{{nginx_sources}}"
+  with_items: "{{ nginx_sources }}"
 
 - name: Configure nginx source code
   command: >
-    ./configure {{nginx_compile_flags}}
+    ./configure {{ nginx_compile_flags }}
   args:
-    chdir: /usr/local/src/nginx-{{nginx_version}}
+    chdir: /usr/local/src/nginx-{{ nginx_version }}
   environment: "{{ nginx_configure_environ }}"
 
 - name: Build source code
   make:
-    chdir: /usr/local/src/nginx-{{nginx_version}}
+    chdir: /usr/local/src/nginx-{{ nginx_version }}
 
 - name: Stat nginx compiled binary
   stat:
@@ -69,7 +69,7 @@
 
 - name: Install source code
   make:
-    chdir: /usr/local/src/nginx-{{nginx_version}}
+    chdir: /usr/local/src/nginx-{{ nginx_version }}
     target: install
   notify: nginx restart
   become: true

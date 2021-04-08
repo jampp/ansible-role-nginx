@@ -11,9 +11,9 @@
 
 - name: Download LuaJIT sources
   git:
-    repo: "{{nginx_luajit_repository}}"
+    repo: "{{ nginx_luajit_repository }}"
     dest: /usr/local/src/luajit.git
-    version: "{{nginx_luajit_git_version}}"
+    version: "{{ nginx_luajit_git_version }}"
     accept_hostkey: yes
     force: yes
 
@@ -43,7 +43,7 @@
 - name: Create symlink for LuaJIT
   file:
     state: link
-    src: "/usr/local/luajit/bin/{{nginx_luajit_bin_name}}"
+    src: "/usr/local/luajit/bin/{{ nginx_luajit_bin_name }}"
     path: /usr/local/luajit/bin/luajit
   become: true
 

@@ -2,12 +2,12 @@
 
 - name: Stat default vhost
   stat:
-    path: "{{nginx_config_dir}}/default.conf"
+    path: "{{ nginx_config_dir }}/default.conf"
   register: default_vh
 
 - name: Remove default_server config
   lineinfile:
-    dest:     "{{nginx_config_dir}}/default.conf"
+    dest:     "{{ nginx_config_dir }}/default.conf"
     regexp:   '^([\t ]*listen.*)default_server;'
     backrefs: yes
     line:     '\1;'
