@@ -53,7 +53,7 @@
     mv {{ nginx_log_dir }} {{ nginx_log_dir }}.bkp
   when:
     - _nginx_log_dir.stat.isdir is defined
-    - nginx_log_symlink_src != False
+    - nginx_log_symlink_src != "False"
 
 # If nginx_log_symlink_src is other than False, create the directory
 # (most likely on a different filesystem). If it is set to False, then
@@ -62,7 +62,7 @@
 - name: Nginx Log directory
   file:
     state:  directory
-    dest:  "{{ (nginx_log_symlink_src != False) | ternary(nginx_log_symlink_src, nginx_log_dir) }}"
+    dest:  "{{ (nginx_log_symlink_src != 'False') | ternary(nginx_log_symlink_src, nginx_log_dir) }}"
     owner: "{{ nginx_user }}"
     group: "{{ nginx_group }}"
     mode:  "0755"
@@ -75,7 +75,7 @@
     dest:  "{{ nginx_log_dir }}"
     owner: "{{ nginx_user }}"
     group: "{{ nginx_group }}"
-  when: nginx_log_symlink_src != False
+  when: nginx_log_symlink_src != "False"
 
 # SELinux Policies must be adjusted when using nginx_log_symlink_src, to ensure the
 # appropriate context is provided for the files created there.
@@ -91,6 +91,6 @@
     - _nginx_selinux_enforcing.rc == 0
     - nginx_install_repo
     - _nginx_log_dir.stat.isdir is defined
-    - nginx_log_symlink_src != False
+    - nginx_log_symlink_src != "False"
 
 # vi:ts=2:sw=2:et:ft=yaml
