@@ -41,7 +41,7 @@
   register: _nginx_download_sources
   with_items: "{{ nginx_sources }}"
 
-- name: Configure nginx source code
+- name: Configure nginx source code  # noqa 503
   command: >
     ./configure {{ nginx_compile_flags }}
   args:
@@ -99,7 +99,7 @@
   when: ansible_service_mgr == "systemd"
   register: _nginx_systemd_unit_file
 
-- name: Reload systemd
+- name: Reload systemd  # noqa 503
   systemd:
     daemon_reload: yes
   when: _nginx_systemd_unit_file.changed and ansible_service_mgr == "systemd"

@@ -3,7 +3,7 @@
 # Compile and install Lua libraries
 #
 
-- name: Configure lua rocks source code
+- name: Configure lua rocks source code  # noqa 503
   command: >
     ./configure {{ nginx_lua_rocks_configure_args }}
   args:

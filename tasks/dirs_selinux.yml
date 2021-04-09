@@ -9,5 +9,5 @@
 # Restore the SELinux context provided by the nginx package after the forced symlink
 # creation in "Nginx Log directory symlink" breaks it.
 - name: Nginx Log directory ensure SELinux context is correct in default location (symlink)
-  command: "restorecon {{ nginx_log_dir }}"
+  command: "restorecon {{ nginx_log_dir }}"  # noqa 503
   when: _nginx_log_dir_file_task.changed

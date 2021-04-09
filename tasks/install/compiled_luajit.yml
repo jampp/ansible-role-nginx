@@ -18,12 +18,12 @@
     force: yes
   register: _nginx_luajit_sources_download
 
-- name: Build LuaJIT
+- name: Build LuaJIT  # noqa 503
   make:
     chdir: /usr/local/src/luajit.git
   when: _nginx_luajit_sources_download.changed
 
-- name: Install LuaJIT
+- name: Install LuaJIT  # noqa 503
   make:
     chdir: /usr/local/src/luajit.git
     target: install
@@ -40,7 +40,7 @@
   register: _nginx_luajit_configure_ld_so_conf
   become: true
 
-- name: Run ldconfig for LuaJIT
+- name: Run ldconfig for LuaJIT  # noqa 503
   command: ldconfig
   when: _nginx_luajit_configure_ld_so_conf.changed
   become: true
