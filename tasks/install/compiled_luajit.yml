@@ -16,10 +16,12 @@
     version: "{{ nginx_luajit_git_version }}"
     accept_hostkey: yes
     force: yes
+  register: _nginx_luajit_sources_download
 
 - name: Build LuaJIT
   make:
     chdir: /usr/local/src/luajit.git
+  when: _nginx_luajit_sources_download.changed
 
 - name: Install LuaJIT
   make:
@@ -27,6 +29,7 @@
     target: install
     params:
       PREFIX: /usr/local/luajit
+  when: _nginx_luajit_sources_download.changed
   become: true
 
 - name: Configure LuaJIT ld.so.conf
@@ -34,10 +37,12 @@
     dest: /etc/ld.so.conf.d/luajit.conf
     content: /usr/local/luajit/lib
     mode: 0640
+  register: _nginx_luajit_configure_ld_so_conf
   become: true
 
 - name: Run ldconfig for LuaJIT
   command: ldconfig
+  when: _nginx_luajit_configure_ld_so_conf.changed
   become: true
 
 - name: Create symlink for LuaJIT

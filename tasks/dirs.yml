@@ -66,6 +66,7 @@
     owner: "{{ nginx_user }}"
     group: "{{ nginx_group }}"
     mode:  "0755"
+  register: _nginx_log_dir_file_task
 
 - name: Nginx Log directory symlink
   file:
@@ -81,14 +82,9 @@
 # appropriate context is provided for the files created there.
 # TODO: ensure SELinux policies are properly setup when using compiled nginx.
 
-- name: Check SELinux status
-  shell: "getenforce | grep 'Enforcing'"
-  failed_when: false
-  register: _nginx_selinux_enforcing # rc == 0 when SELinux is enabled and managed
-
 - include: dirs_selinux.yml
   when:
-    - _nginx_selinux_enforcing.rc == 0
+    - ansible_facts.selinux.status == 'enabled'
     - nginx_install_repo
     - _nginx_log_dir.stat.isdir is defined
     - nginx_log_symlink_src != "False"

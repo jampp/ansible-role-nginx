@@ -38,6 +38,7 @@
     src: "{{ item }}"
     dest: /usr/local/src
     remote_src: yes
+  register: _nginx_download_sources
   with_items: "{{ nginx_sources }}"
 
 - name: Configure nginx source code
@@ -46,6 +47,7 @@
   args:
     chdir: /usr/local/src/nginx-{{ nginx_version }}
   environment: "{{ nginx_configure_environ }}"
+  when: _nginx_download_sources.changed
 
 - name: Build source code
   make:

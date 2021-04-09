@@ -8,6 +8,7 @@
     ./configure {{ nginx_lua_rocks_configure_args }}
   args:
     chdir: /usr/local/src/luarocks-{{ nginx_lua_rocks_version }}
+  when: _nginx_download_sources.changed
 
 - name: Build lua rocks source code
   make:
@@ -20,6 +21,5 @@
     target: install
   become: true
 
-- name: Install additional lua rocks
-  command: "/usr/local/bin/luarocks install {{ item.name }} {{ item.version }}"
+- include: lua_rock.yml
   with_items: "{{ nginx_lua_rocks }}"
