@@ -4,9 +4,9 @@
   yum:
     name: "epel-release"
     state: "present"
-  when: >
-    ansible_os_family == "RedHat" and not
-      (ansible_distribution == 'Amazon' and ansible_distribution_version == '2')
+  when:
+    - ansible_os_family == "RedHat"
+    - not (ansible_distribution == 'Amazon' and ansible_distribution_version == '2')
 
 - name: Add EPEL repository (Amazon Linux 2)
   shell: >
@@ -14,4 +14,6 @@
 
     amazon-linux-extras list | grep -Eq 'epel\s+enabled' ||
     amazon-linux-extras install epel -y
-  when: ansible_distribution == 'Amazon' and ansible_distribution_version == '2'
+  when:
+    - ansible_distribution == 'Amazon'
+    - ansible_distribution_version == '2'
