@@ -3,6 +3,12 @@
 # Compile and install nginx using source code
 #
 
+- name: Install dependencies for LuaJIT compilation
+  package:
+    name: "{{ nginx_compiled_luajit_packages }}"
+    state: "present"
+    update_cache: true
+
 - name: Download LuaJIT sources
   git:
     repo: "{{nginx_luajit_repository}}"

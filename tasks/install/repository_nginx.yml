@@ -3,9 +3,18 @@
 # Install required packages
 #
 
-- name: Install Nginx using repositories
+- name: Install Nginx using repositories (other)
   package:
     name:  "{{nginx_repo_packages}}"
     state: "present"
+    update_cache: yes
+  when: ansible_os_family != "RedHat"
+
+- name: Install Nginx using repositories (RedHat)
+  yum:
+    name:  "{{ nginx_repo_packages }}"
+    state: "present"
+    enablerepo: "epel"
+  when: ansible_os_family == "RedHat"
 
 # vi:ts=2:sw=2:et:ft=yaml

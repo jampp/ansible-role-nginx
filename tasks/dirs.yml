@@ -77,5 +77,20 @@
     group: "{{nginx_group}}"
   when: nginx_log_symlink_src != False
 
+# SELinux Policies must be adjusted when using nginx_log_symlink_src, to ensure the
+# appropriate context is provided for the files created there.
+# TODO: ensure SELinux policies are properly setup when using compiled nginx.
+
+- name: Check SELinux status
+  shell: "getenforce | grep 'Enforcing'"
+  failed_when: false
+  register: _nginx_selinux_enforcing # rc == 0 when SELinux is enabled and managed
+
+- include: dirs_selinux.yml
+  when:
+    - _nginx_selinux_enforcing.rc == 0
+    - nginx_install_repo
+    - _nginx_log_dir.stat.isdir is defined
+    - nginx_log_symlink_src != False
 
 # vi:ts=2:sw=2:et:ft=yaml

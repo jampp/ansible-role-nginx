@@ -12,7 +12,7 @@
     mode:    "0640"
   when: (item.ssl_enabled is defined) and (item.ssl_enabled)
   with_items: "{{nginx_vhosts}}"
-  notify: nginx restart
+  notify: nginx reload
   no_log: true
 
 - name: SSL PEM
@@ -24,7 +24,7 @@
     mode:  "0640"
   when: (item.ssl_enabled is defined) and (item.ssl_enabled)
   with_items: "{{nginx_vhosts}}"
-  notify: nginx restart
+  notify: nginx reload
   no_log: true
 
 # vi:ts=2:sw=2:et:ft=yaml

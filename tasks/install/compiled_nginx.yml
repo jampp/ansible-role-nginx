@@ -10,8 +10,9 @@
 
 - name: Install dependencies for compilation
   package:
-    name:  "{{nginx_compilation_packages}}"
+    name: "{{nginx_compilation_packages}}"
     state: "present"
+    update_cache: true
 
 - name: Install extra dependencies for compilation
   package:
@@ -50,11 +51,32 @@
   make:
     chdir: /usr/local/src/nginx-{{nginx_version}}
 
+- name: Stat nginx compiled binary
+  stat:
+    checksum_algorithm: sha256
+    get_checksum: true
+    # This path is probably dependent on the nginx version.
+    path: /usr/local/src/nginx-{{ nginx_version }}/objs/nginx
+  register: _nginx_src_compiled_binary_stat
+
+- name: Stat nginx installed binary
+  stat:
+    checksum_algorithm: sha256
+    get_checksum: true
+    path: "{{ nginx_bin }}"
+  register: _nginx_src_installed_binary_stat
+  failed_when: false  # The file doesn't exist when this is first run
+
 - name: Install source code
   make:
     chdir: /usr/local/src/nginx-{{nginx_version}}
     target: install
+  notify: nginx restart
   become: true
+  when: >
+    not _nginx_src_installed_binary_stat.stat.exists or
+    (_nginx_src_installed_binary_stat.stat.checksum !=
+      _nginx_src_compiled_binary_stat.stat.checksum)
 
 - name: Install init script
   template:
@@ -63,5 +85,28 @@
     owner: root
     group: root
     mode: "0755"
+  when: ansible_service_mgr != "systemd"
 
+- name: Install systemd unit file
+  template:
+    src: etc/systemd/system/nginx.service
+    dest: /etc/systemd/system/nginx.service
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_service_mgr == "systemd"
+  register: _nginx_systemd_unit_file
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+  when: _nginx_systemd_unit_file.changed and ansible_service_mgr == "systemd"
+
+- name: Nginx Temp directories
+  file:
+    state: directory
+    dest: /var/lib/nginx/tmp/  # See defaults/main.yml
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_group }}"
+    mode: "0750"
 # vi:ts=2:sw=2:et:ft=yaml

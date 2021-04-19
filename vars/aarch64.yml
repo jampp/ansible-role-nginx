@@ -7,4 +7,3 @@ nginx_configure_environ:
 nginx_lua_rocks_configure_args: --with-lua=/usr/local/luajit
 
 nginx_arch_flags: "-mtune=generic"
-

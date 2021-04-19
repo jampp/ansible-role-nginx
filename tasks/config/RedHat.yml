@@ -12,6 +12,6 @@
     backrefs: yes
     line:     '\1;'
   when: default_vh.stat.exists
-  notify: nginx restart
+  notify: nginx reload
 
 # vi:ts=2:sw=2:et:ft=yaml

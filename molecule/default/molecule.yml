@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+lint: |
+  set -e
+  yamllint .
+platforms:
+  - name: vagrant-centos7
+    box: centos/7
+    memory: 512
+    cpus: 2
+  - name: vagrant-ubuntu
+    box: ubuntu/focal64
+    memory: 512
+    cpus: 2
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      stdout_callback: yaml
+      become: yes
+verifier:
+  name: ansible

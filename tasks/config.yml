@@ -7,7 +7,7 @@
     owner: "root"
     group: "{{nginx_group}}"
     mode:  "0644"
-  notify: nginx restart
+  notify: nginx reload
 
 
 - name: Nginx configuration includes
@@ -18,7 +18,7 @@
     group: "{{nginx_group}}"
     mode:  "0644"
   with_dict: "{{nginx_config}}"
-  notify: nginx restart
+  notify: nginx reload
 
 
 - name: Nginx OS family config (Debian)
