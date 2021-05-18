@@ -226,4 +226,8 @@ nginx_vhosts: []
 #
 nginx_disable_vhosts: []
 
+# Units to start after current unit
+#
+nginx_service_unit_after: network.target remote-fs.target nss-lookup.target
+
 # vi:ts=2:sw=2:et:ft=yaml
