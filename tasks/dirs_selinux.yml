@@ -1,20 +1,13 @@
 ---
 
-- name: Nginx Log directory check if SELinux context information is present
-  shell: "semanage fcontext --list -C | grep -E '^{{ nginx_log_symlink_src }} = {{ nginx_log_dir }}'"
-  failed_when: false
-  register: _nginx_log_dir_fcontext
-
-- name: Nginx Log directory add SELinux context information
-  command: >
-    semanage fcontext -a -e {{ nginx_log_dir }} {{ nginx_log_symlink_src }}
-  when:
-    - _nginx_log_dir_fcontext.rc != 0
-
 - name: Nginx Log directory ensure SELinux context is correct in new dir
   command: "restorecon -R {{ nginx_log_symlink_src }}"
+  when:
+    # Redundant, but added to prevent E301 linting issue
+    - ansible_facts.selinux.status == 'enabled'
 
 # Restore the SELinux context provided by the nginx package after the forced symlink
 # creation in "Nginx Log directory symlink" breaks it.
 - name: Nginx Log directory ensure SELinux context is correct in default location (symlink)
-  command: "restorecon {{ nginx_log_dir }}"
+  command: "restorecon {{ nginx_log_dir }}"  # noqa 503
+  when: _nginx_log_dir_file_task.changed
