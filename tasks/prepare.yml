@@ -17,3 +17,9 @@
   when:
     - ansible_distribution == 'Amazon'
     - ansible_distribution_version == '2'
+
+- name: Configure git to use HTTPS
+  git_config:
+    name: url."https://".insteadOf
+    scope: global
+    value: git://
