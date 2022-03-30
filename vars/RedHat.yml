@@ -7,12 +7,17 @@ nginx_repo_packages:
   - nginx
   - policycoreutils-python
 
+nginx_openssl_packages:
+  1.0.2: openssl
+  1.1.1: openssl11
+
 nginx_compilation_packages:
   - gcc
   - make
   - git
   - pkgconfig
-  - openssl-devel
+  - "{{ nginx_openssl_packages[nginx_openssl_version] }}"
+  - "{{ nginx_openssl_packages[nginx_openssl_version] }}-devel"
   - pcre-devel
   - zlib-devel
   - unzip
