@@ -38,7 +38,7 @@ nginx_pid_file: /var/run/nginx.pid;
 
 # Variables to control compilation sources
 nginx_version: 1.13.12
-nginx_openssl_version: 1.0.2
+nginx_openssl_version: 1.0
 nginx_devel_kit_version: 0.3.0
 nginx_lua_rocks_version: 3.0.4
 nginx_lua_module_version: 0.10.14

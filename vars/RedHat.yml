@@ -8,8 +8,8 @@ nginx_repo_packages:
   - policycoreutils-python
 
 nginx_openssl_packages:
-  1.0.2: openssl
-  1.1.1: openssl11
+  1.0: openssl
+  1.1: openssl11
 
 nginx_compilation_packages:
   - gcc
