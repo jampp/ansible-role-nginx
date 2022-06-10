@@ -3,23 +3,23 @@
 - name: Virtualhost Logdir
   file:
     state: directory
-    dest:  "{{nginx_log_dir}}/{{item.server_name}}"
-    owner: "{{nginx_user}}"
-    group: "{{nginx_group}}"
+    dest:  "{{ nginx_log_dir }}/{{ item.server_name }}"
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_group }}"
     mode:  "0755"
-  with_items: "{{nginx_vhosts}}"
+  with_items: "{{ nginx_vhosts }}"
   no_log: true
 
 
 - name: Virtualhost root
   file:
     state: directory
-    dest:  "{{item.root}}"
+    dest:  "{{ item.root }}"
     owner: "root"
-    group: "{{nginx_group}}"
+    group: "{{ nginx_group }}"
     mode:  "0755"
   when: (item.create_root is defined) and (item.create_root) and (item.root is defined) and (item.root)
-  with_items: "{{nginx_vhosts}}"
+  with_items: "{{ nginx_vhosts }}"
   notify: nginx reload
   no_log: true
 
@@ -27,21 +27,21 @@
 - name: Virtualhosts Config
   template:
     src:   etc/nginx/sites-available/vhost.j2
-    dest:  "{{nginx_sites_available}}/{{item.server_name}}.conf"
+    dest:  "{{ nginx_sites_available }}/{{ item.server_name }}.conf"
     owner: "root"
     group: "root"
     mode:  "0644"
-  with_items: "{{nginx_vhosts}}"
+  with_items: "{{ nginx_vhosts }}"
   notify: nginx reload
   no_log: true
 
 
 - name: Enable Virtualhost
   file:
-    src:   "{{nginx_sites_available}}/{{item.server_name}}.conf"
-    dest:  "{{nginx_sites_enabled}}/{{item.server_name}}.conf"
+    src:   "{{ nginx_sites_available }}/{{ item.server_name }}.conf"
+    dest:  "{{ nginx_sites_enabled }}/{{ item.server_name }}.conf"
     state: link
-  with_items: "{{nginx_vhosts}}"
+  with_items: "{{ nginx_vhosts }}"
   notify: nginx reload
   no_log: true
 
@@ -49,8 +49,8 @@
 - name: Disable Virtualhosts
   file:
     state: absent
-    dest:  "{{nginx_sites_enabled}}/{{item}}"
-  with_items: "{{nginx_disable_vhosts}}"
+    dest:  "{{ nginx_sites_enabled }}/{{ item }}"
+  with_items: "{{ nginx_disable_vhosts }}"
   notify: nginx reload
 
 

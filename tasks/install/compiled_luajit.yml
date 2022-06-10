@@ -11,22 +11,25 @@
 
 - name: Download LuaJIT sources
   git:
-    repo: "{{nginx_luajit_repository}}"
+    repo: "{{ nginx_luajit_repository }}"
     dest: /usr/local/src/luajit.git
-    version: "{{nginx_luajit_git_version}}"
+    version: "{{ nginx_luajit_git_version }}"
     accept_hostkey: yes
     force: yes
+  register: _nginx_luajit_sources_download
 
-- name: Build LuaJIT
+- name: Build LuaJIT  # noqa 503
   make:
     chdir: /usr/local/src/luajit.git
+  when: _nginx_luajit_sources_download.changed
 
-- name: Install LuaJIT
+- name: Install LuaJIT  # noqa 503
   make:
     chdir: /usr/local/src/luajit.git
     target: install
     params:
       PREFIX: /usr/local/luajit
+  when: _nginx_luajit_sources_download.changed
   become: true
 
 - name: Configure LuaJIT ld.so.conf
@@ -34,16 +37,18 @@
     dest: /etc/ld.so.conf.d/luajit.conf
     content: /usr/local/luajit/lib
     mode: 0640
+  register: _nginx_luajit_configure_ld_so_conf
   become: true
 
-- name: Run ldconfig for LuaJIT
+- name: Run ldconfig for LuaJIT  # noqa 503
   command: ldconfig
+  when: _nginx_luajit_configure_ld_so_conf.changed
   become: true
 
 - name: Create symlink for LuaJIT
   file:
     state: link
-    src: "/usr/local/luajit/bin/{{nginx_luajit_bin_name}}"
+    src: "/usr/local/luajit/bin/{{ nginx_luajit_bin_name }}"
     path: /usr/local/luajit/bin/luajit
   become: true
 

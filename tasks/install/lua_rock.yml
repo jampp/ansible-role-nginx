@@ -1,0 +1,15 @@
+---
+# Install Lua rocks
+
+- name: "Check for Lua rock {{ item.name }}"
+  become: yes
+  command: >
+    /usr/local/bin/luarocks list --porcelain {{ item.name }} {{ item.version }}
+  changed_when: false  # The 'luarocks list' command is idempotent
+  register: _nginx_lua_rock_check
+
+- name: "Install rock {{ item.name }}"
+  become: yes
+  command: >
+    /usr/local/bin/luarocks install {{ item.name }} {{ item.version }}
+  when: _nginx_lua_rock_check.stdout.find('{{ item.name }}') == -1
