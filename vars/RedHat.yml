@@ -10,6 +10,7 @@ nginx_repo_packages:
 nginx_openssl_packages:
   1.0: openssl
   1.1: openssl11
+  3.0: openssl
 
 nginx_compilation_packages:
   - gcc

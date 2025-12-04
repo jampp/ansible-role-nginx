@@ -4,7 +4,8 @@
 #
 
 - name: Install dependencies for LuaJIT compilation
-  package:
+  action:
+    module: "{{ 'dnf' if ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2023' else 'package' }}"
     name: "{{ nginx_compiled_luajit_packages }}"
     state: "present"
     update_cache: true
