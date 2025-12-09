@@ -4,18 +4,21 @@
 #
 
 - name: Remove nginx installation by repo
-  package:
+  action:
+    module: "{{ 'dnf' if ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2023' else 'package' }}"
     name: nginx
     state: absent
 
 - name: Install dependencies for compilation
-  package:
+  action:
+    module: "{{ 'dnf' if ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2023' else 'package' }}"
     name: "{{nginx_compilation_packages}}"
     state: "present"
     update_cache: true
 
 - name: Install extra dependencies for compilation
-  package:
+  action:
+    module: "{{ 'dnf' if ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2023' else 'package' }}"
     name:  "{{nginx_compilation_arch_packages}}"
     state: "present"
 
