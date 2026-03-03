@@ -46,7 +46,7 @@
 - name: Apply NGINX patches
   patch:
     src: "{{item}}"
-    dest: /usr/local/src/nginx-{{nginx_version}}
+    basedir: /usr/local/src/nginx-{{nginx_version}}
     strip: 1
   with_items: "{{ nginx_patches }}"
 
