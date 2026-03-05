@@ -43,6 +43,13 @@
     remote_src: yes
   with_items: "{{nginx_sources}}"
 
+- name: Apply NGINX patches
+  patch:
+    src: "{{item}}"
+    basedir: /usr/local/src/nginx-{{nginx_version}}
+    strip: 1
+  with_items: "{{ nginx_patches }}"
+
 - name: Configure nginx source code
   command: >
     ./configure {{nginx_compile_flags}}

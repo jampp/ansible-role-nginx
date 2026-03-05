@@ -60,6 +60,8 @@ nginx_lua_rocks: []
 
 nginx_bin: /usr/local/sbin/nginx
 
+nginx_patches: []
+
 nginx_compile_flags:
    --prefix=/usr/local/nginx
    --sbin-path=/usr/local/sbin/nginx
