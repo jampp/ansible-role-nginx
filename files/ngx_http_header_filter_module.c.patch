@@ -1,20 +1,16 @@
 diff --git a/src/http/ngx_http_header_filter_module.c b/src/http/ngx_http_header_filter_module.c
-index 76f6e9629..9f427e8c9 100644
+index 76f6e9629..8dadc5d5d 100644
 --- a/src/http/ngx_http_header_filter_module.c
 +++ b/src/http/ngx_http_header_filter_module.c
-@@ -46,9 +46,9 @@ ngx_module_t  ngx_http_header_filter_module = {
- };
+@@ -283,7 +283,7 @@ ngx_http_header_filter(ngx_http_request_t *r)
  
+     clcf = ngx_http_get_module_loc_conf(r, ngx_http_core_module);
  
--static u_char ngx_http_server_string[] = "Server: nginx" CRLF;
--static u_char ngx_http_server_full_string[] = "Server: " NGINX_VER CRLF;
--static u_char ngx_http_server_build_string[] = "Server: " NGINX_VER_BUILD CRLF;
-+static u_char ngx_http_server_string[] = "";
-+static u_char ngx_http_server_full_string[] = "";
-+static u_char ngx_http_server_build_string[] = "";
+-    if (r->headers_out.server == NULL) {
++    if (r->headers_out.server == NULL && clcf->server_tokens != NGX_HTTP_SERVER_TOKENS_OFF) {
+         if (clcf->server_tokens == NGX_HTTP_SERVER_TOKENS_ON) {
+             len += sizeof(ngx_http_server_full_string) - 1;
  
- 
- static ngx_str_t ngx_http_status_lines[] = {
 @@ -383,7 +383,7 @@ ngx_http_header_filter(ngx_http_request_t *r)
          len += sizeof("Connection: upgrade" CRLF) - 1;
  
@@ -24,6 +20,15 @@ index 76f6e9629..9f427e8c9 100644
  
          /*
           * MSIE and Opera ignore the "Keep-Alive: timeout=<N>" header.
+@@ -452,7 +452,7 @@ ngx_http_header_filter(ngx_http_request_t *r)
+     }
+     *b->last++ = CR; *b->last++ = LF;
+ 
+-    if (r->headers_out.server == NULL) {
++    if (r->headers_out.server == NULL && clcf->server_tokens != NGX_HTTP_SERVER_TOKENS_OFF) {
+         if (clcf->server_tokens == NGX_HTTP_SERVER_TOKENS_ON) {
+             p = ngx_http_server_full_string;
+             len = sizeof(ngx_http_server_full_string) - 1;
 @@ -560,8 +560,8 @@ ngx_http_header_filter(ngx_http_request_t *r)
                               sizeof("Connection: upgrade" CRLF) - 1);
  
